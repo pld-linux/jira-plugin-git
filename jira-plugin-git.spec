@@ -26,18 +26,20 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		pluginsdeploydir	%{_datadir}/jira/WEB-INF/lib
 
 %description
-A plugin to integrate JIRA with Git. This plugin displays Git commit info in a
-tab on the associated JIRA issue. To link a commit to a JIRA issue, the
-commit's text must contain the issue key (eg. "This commit fixes TST-123").
+A plugin to integrate JIRA with Git. This plugin displays Git commit
+info in a tab on the associated JIRA issue. To link a commit to a JIRA
+issue, the commit's text must contain the issue key (eg. "This commit
+fixes TST-123").
 
 %prep
 %setup -qc
 mv pawelz-jira4-git-plugin-*/* .
 
+%build
+%ant
+
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%ant
 
 install -d $RPM_BUILD_ROOT{%{pluginsdeploydir},%{pluginsdir}}
 cp jira-plugin-git-%{version}.jar $RPM_BUILD_ROOT%{pluginsdir}/plugin-%{plugin}-%{version}.jar
