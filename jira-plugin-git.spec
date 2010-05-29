@@ -10,9 +10,14 @@ Source0:	http://github.com/pawelz/jira4-git-plugin/tarball/v%{version}/%{name}-%
 # Source0-md5:	c5c6c67d75e809956f795be9d400eee1
 URL:		http://github.com/pawelz/jira4-git-plugin
 BuildRequires:	ant
+BuildRequires:	java(servlet)
+BuildRequires:	java-jgit
+BuildRequires:	java-jsch
 BuildRequires:	jira >= 4.0
 BuildRequires:	rpm-javaprov
 BuildRequires:	rpmbuild(macros) >= 1.300
+Requires:	java-jgit
+Requires:	java-jsch
 Requires:	jira >= 4.0
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -38,6 +43,12 @@ install -d $RPM_BUILD_ROOT{%{pluginsdeploydir},%{pluginsdir}}
 cp jira-plugin-git-%{version}.jar $RPM_BUILD_ROOT%{pluginsdir}/plugin-%{plugin}-%{version}.jar
 ln -s %{pluginsdir}/plugin-%{plugin}-%{version}.jar $RPM_BUILD_ROOT%{pluginsdeploydir}/plugin-%{plugin}-%{version}.jar
 
+JGIT_JAR=$(find-jar jgit)
+JSCH_JAR=$(find-jar jsch)
+
+ln -s $JGIT_JAR $RPM_BUILD_ROOT%{pluginsdeploydir}/jgit.jar
+ln -s $JSCH_JAR $RPM_BUILD_ROOT%{pluginsdeploydir}/jsch.jar
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -46,3 +57,5 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE README
 %{pluginsdir}/plugin-%{plugin}-%{version}.jar
 %{pluginsdeploydir}/plugin-%{plugin}-%{version}.jar
+%{pluginsdeploydir}/jgit.jar
+%{pluginsdeploydir}/jsch.jar
