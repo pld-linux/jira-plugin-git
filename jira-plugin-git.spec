@@ -1,5 +1,4 @@
 %define		plugin	git
-%include	/usr/lib/rpm/macros.java
 Summary:	JIRA git plugin
 Name:		jira-plugin-%{plugin}
 Version:	0.5.1
